@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>عضویت-اثر انگشت</title>
+	<!-- start css and styles -->
+	<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+	<link type="text/css" href="/static/css/signstyle.css" rel="stylesheet" />
+    <!-- end css and styles -->
+	<link rel="shortcut icon" href="">
+	<style>
+		body {
+		  background-image: url("/static/pics/photo-02.jpg");
+		}
+		</style>
+</head>
+<body>
+	<p> CANVAS FINGERPRINT</p>
+					<li class="tm-nav-item active">
+						<button class="ghost" style="background: rosybrown;" > <a  href="{% url 'index' %}">صفحه نخست</a></button>
+					</li>
+					<p> </p>
+	<div class="container left-panel-active" id="container">
+		<!-- start sing up form -->
+		<div class="form-container sign-up-container">
+			<form method="POST" action = "{% url 'signup'%}">
+				{% csrf_token%}
+				<h1>ایجاد حساب</h1>
+				<span> با ایمیل خود حساب ایجاد کنید</span>
+					<div class="form-group">
+					{{form.username}}
+				  </div>
+				  {% if form.username.errors %}
+				  <p style="color: red">
+					{% for error in form.username.errors %}
+					{{ error }}
+					{% endfor %}
+				</p>
+				{% endif %}
+					<div class="form-group">
+					{{form.email }}
+				  </div>
+				{% if form.email.errors %}
+				  <p style="color: red">
+					{% for error in form.email.errors %}
+					{{ error }}
+					{% endfor %}
+				</p>
+				{% endif %}
+					<div class="form-group">
+					{{form.password1 }}
+				  </div>
+				  {% if form.password1.errors %}
+				  <p style="color: red">
+					{% for error in form.password1.errors %}
+					{{ error }}
+					{% endfor %}
+				</p>
+				{% endif %}
+
+					<div class="form-group">
+					{{form.password2 }}
+					</div>
+				{% if form.password2.errors %}
+					<p style="color: red">
+					{% for error in form.password2.errors %}
+					{{ error }}
+					{% endfor %}
+					</p>
+				{% endif %}
+				  <div class="form-group">
+					<input  type="hidden" name="canvasfingerprint" value="" id="canvasfingerprint">
+				</div>
+				<button type="submit">عضویت</button> 
+			</form>
+		</div>
+
+		<div class="overlay-container">
+			<div class="overlay">
+				<!-- start sing in overlay -->
+				<div class="overlay-panel overlay-right">
+					<h1>خوش آمدید</h1>
+					<p>برای برقراری ارتباط با ما لطفا حساب کاربری خود را ایجاد کنید</p>
+					<button class="ghost" id="signIn"> <a  style="  color: white;" href="{% url 'sign_in' %}">ورود</a></button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- canvas fingerprint scripts -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="application/javascript" src="/static/js/murmur.js"></script>
+<canvas id="c2" height="30" width="700" style="background: white" title="canvas element">
+</canvas>
+<script type="application/javascript">
+    (() => {
+        const canvas = document.getElementById("c2");
+        // get the 2d context and apply the text
+        const context = canvas.getContext("2d");
+        context.font = "18pt Arial";
+        context.textBaseline = "top";
+        context.fillText("How quickly daft jumping zebras vex. (Also, punctuation: Ɛ/ζ}Φ)", 2, 2);
+    })();
+</script>
+
+<!-- <p>Output:</p> -->
+                <!-- <pre><code id="raw-output"></code></pre> -->
+                
+                <script type="application/javascript">
+                    (() => {
+                        const canvas = document.getElementById("c2");
+                        // const elem = document.getElementById("raw-output");
+                        // fetch the base64 encoded image
+                        const fingerprint = canvas.toDataURL("image/png");
+                        // elem.innerHTML = fingerprint.substring(0, 90) + "...";
+                    })();
+                </script>
+
+<h4>Canvas Fingerprint : <code id="raw-output-2"></code></h4>
+
+                <script type="application/javascript">
+                    (() => {
+                        const canvas = document.getElementById("c2");
+                        const elem = document.getElementById("raw-output-2");
+                        // fetch the base64 encoded image
+                        const fingerprint = canvas.toDataURL("image/png");
+                        const murmur = Murmur.x64hash128(fingerprint, 42);
+                        elem.innerHTML = murmur;
+                        $('#canvasfingerprint').val(murmur)
+                        canvas.style.display = "none";
+                    })();
+                </script>
+ <!-- end canvas fingerprint script -->
+
+</body><!-- This template has been downloaded from Webrubik.com -->
+</html>

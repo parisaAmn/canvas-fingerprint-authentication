@@ -39,16 +39,6 @@ def ajaxx(request):
     else:
         print('8')
         return render(request , 'canvas/index.html' , {'check_fingerprint':False})
-        
-
-def about(request):
-    return render(request, 'canvas/about.html', {})
-
-def contact(request):
-    return render(request, 'canvas/contact.html', {})
-
-def test(request):
-    return render(request, 'canvas/default.html', {})
 
 def signup(request):
     if request.method == "POST":
@@ -77,7 +67,7 @@ def signup(request):
             return redirect('index')
     else:
         form = SignUpForm()
-    return render(request, 'canvas/signup2.html', {'form': form})
+    return render(request, 'canvas/signup.html', {'form': form})
 
 def sign_in(request):
     if request.method == 'POST':
@@ -133,14 +123,14 @@ def sign_in(request):
                 return redirect('index')
                 # return render(request , "canvas/index.html", {'check_fingerprint':False})
             else:
-                messages.error(request, "Invalid username or password.")
-                return render(request, 'canvas/sign_in.html', {'form': form})
+                messages.error(request, "نام کاربری یا رمز عبور معتبر نیست")
+                return render(request, 'canvas/signin.html', {'form': form})
         else:
-            messages.error(request, "Invalid username or password.")
-            return render(request, 'canvas/sign_in.html', {'form': form})
+            messages.error(request, "نام کاربری یا رمز عبور معتبر نیست")
+            return render(request, 'canvas/signin.html', {'form': form})
     else:
         form = SignInForm()
-    return render(request, 'canvas/sign_in.html', {'form': form})
+    return render(request, 'canvas/signin.html', {'form': form})
 
 def signout(request):
     print('sign out func:')

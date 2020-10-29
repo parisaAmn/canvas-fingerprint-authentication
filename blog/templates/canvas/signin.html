@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ورود-اثر انگشت بوم</title>
+	<!-- start css and styles -->
+	<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+	<link type="text/css" href="/static/css/signstyle.css" rel="stylesheet" />
+    <!-- end css and styles -->
+	<link rel="shortcut icon" href="">
+	<style>
+		body {
+		  background-image: url("/static/pics/photo-02.jpg");
+		}
+		</style>
+
+</head>
+<body>
+	<p> CNAVAS FINGERPRINT</p>
+	<li class="tm-nav-item active">
+		<button class="ghost" style="background: rosybrown;" > <a  href="{% url 'index' %}">صفحه نخست</a></button>
+	</li>
+	<p> </p>
+	<div class="container" id="container">
+				<!-- start sing in form -->
+		<div class="form-container sign-in-container">
+			<form method="POST" action = "{% url 'sign_in'%}">
+				<h1>ورود</h1>
+				<span>یا با حساب خود وارد شوید</span>
+				{% csrf_token%}
+				<div class="form-group">
+					<label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+					{{form.username}}
+				</div>
+				<div class="form-group">
+					<label for="pass"><i class="zmdi zmdi-lock"></i></label>
+					{{form.password }}
+				</div>
+				<input type="hidden"  name="canvasfingerprint" value="" id="canvasfingerprint">
+				
+				{% if messages %}
+				<p style="color: red"></p>
+				{% for message in messages %} {{ message }} {% endfor %}
+				</p>
+				{% endif %}
+				<button type="submit">ورود</button>
+			</form>
+		</div>
+		<!-- end sing in form -->
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1>سلام، دوست خوبم</h1>
+					<p>وارد حساب کاربری خود شوید و با ما به کشف جهان بپردازید</p>
+					<button class="ghost" id="signIn"> <a style="  color: white;" href="{% url 'signup' %}">عضویت</a></button>
+				</div>
+				<!-- end sing up overlay -->
+			</div>
+		</div>
+	</div>
+
+<!-- canvas fingerprint scripts -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="application/javascript" src="/static/js/murmur.js"></script>
+<canvas id="c2" height="30" width="700" style="background: white" title="canvas element">
+</canvas>
+<script type="application/javascript">
+	(() => {
+		const canvas = document.getElementById("c2");
+		// get the 2d context and apply the text
+		const context = canvas.getContext("2d");
+		context.font = "18pt Arial";
+		context.textBaseline = "top";
+		context.fillText("How quickly daft jumping zebras vex. (Also, punctuation: Ɛ/ζ}Φ)", 2, 2);
+	})();
+</script>
+
+<!-- <p>Output:</p> -->
+				<!-- <pre><code id="raw-output"></code></pre> -->
+				
+				<script type="application/javascript">
+					(() => {
+						const canvas = document.getElementById("c2");
+					   //  const elem = document.getElementById("raw-output");
+						// fetch the base64 encoded image
+						const fingerprint = canvas.toDataURL("image/png");
+					   //  elem.innerHTML = fingerprint.substring(0, 90) + "...";
+					})();
+				</script>
+
+<h4>Canvas Fingerprint : <code id="raw-output-2"></code></h4>
+
+				<script type="application/javascript">
+					(() => {
+						const canvas = document.getElementById("c2");
+						const elem = document.getElementById("raw-output-2");
+						// fetch the base64 encoded image
+						const fingerprint = canvas.toDataURL("image/png");
+						const murmur = Murmur.x64hash128(fingerprint, 42);
+						elem.innerHTML = murmur;
+						$('#canvasfingerprint').val(murmur)
+						canvas.style.display = "none";
+					})();
+				</script>
+ <!-- end canvas fingerprint script -->
+
+	<!-- start javascript -->
+	<!-- <script  src="/static/js/signscripts.js"></script> -->
+</body><!-- This template has been downloaded from Webrubik.com -->
+</html>

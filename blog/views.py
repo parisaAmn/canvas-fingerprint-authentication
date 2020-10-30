@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings 
+from django.utils.translation import activate
 
 
 # Create your views here.
@@ -41,6 +42,7 @@ def ajaxx(request):
         return render(request , 'canvas/index.html' , {'check_fingerprint':False})
 
 def signup(request):
+    activate('fa')
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -70,6 +72,7 @@ def signup(request):
     return render(request, 'canvas/signup.html', {'form': form})
 
 def sign_in(request):
+    activate('fa')
     if request.method == 'POST':
         form = SignInForm(request=request, data=request.POST)
         if form.is_valid():
